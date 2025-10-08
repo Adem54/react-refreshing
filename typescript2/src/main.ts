@@ -1,75 +1,39 @@
-let username = 'Adem';
-console.log(username);
+let myName = 'Adem';//inferred to string...implicit.ly, string i kendisi atiyor, value uzerinden
+let myName2:string = 'Zehra';//explicitly declared, not inferred...cunku biz type i atadik...
+//ama kendimiz explicityl atamasak bile deger atadigmzda o type ini kendisi  bulur...
 
-let a:number =12;
-let b:string = '6';
-let c:number = 5;
+//Ancak iste myName e string bir deger atayinca typescirpt onun string oldugunu inferred-implicity anlar, iste ondan sonra gelip da myName e integer deger atarsak(myName = 5;) typescript compiletime da hata alacagiz...
+//Bu sekilde string sonra int atamak jscriptte sorun degil di degilmi ama typescriptte sorun ama..ki typescritptin amaci da bu id zaten
 
-console.log(a / Number(b));
-//cunku stringi number a cevirir.. type coercion...
-//con enteresan bir sekilde sonuc 2 geliyor
-console.log(c * Number(b));
-//Tabi bircok compile hatasi alacagiz...typescript bunlari dogru bulmaz ama jscriptte boyle bir yapi var.... 
-//Ki zaten amacimz da bizim javscriptte bir compile time ekleyerek compile time hatlarini gormek...ama kod calismaya calisir
+let myName3:string;
+myName3="Zeynep";
+myName3="Erbas";
+let meaningOfLife:number; 
+let isLoading:boolean;
+let album:any;//defeat typescript, typescriptti devredisi birakir, artik istedign tipi girersin 
 
-/*
-typescript bu kodu jscripte soyle cevirir:
-var username = 'Adem';
-console.log(username);
-Cunku tum browserlarda competible..olsun tum browserlarda calissin diye
-Hem ts hem de js acikken username in alti cizili warning aliyoruz main.ts de:Cannot redeclare block-scoped variable 'username'.Cunku her iki dosyada acik ve bizim let ile tanimladigmz username bir de .js de var ile tanimlanmis..main.js i kapatirsak hata kaybolacaktir
+meaningOfLife=42;//has to be number 
+isLoading = true;//has to be boolean
 
-Sorunun asil nedeni
+album = "Hey";
+album = 14;
+album = true;
+//Bu any type i olabildigince az kullanacaz, ama bazi durumlar var ki mecbur any kullanmamiz gerekebilir, ancak dedigmz gibi suistimal etmemek gerek,cunku typescript kullanim amacini ortadan kaldirmis oluyor
 
-TypeScript dil servisi aynı “proje kapsamı” içinde duran tüm .ts ve .js dosyalarını birlikte analiz eder.
-Sen hem main.ts’te global alanda let username = ... diyorsun, hem de derlenmiş main.js (global) içinde aynı isim tekrar tanımlanmış oluyor (genelde var username = ...). Bu iki global tanım çakıştığı için VS Code/TS şu uyarıyı verir:
-
-Cannot redeclare block-scoped variable 'username'.
-
-Not: Dosyayı “açık/kapalı” tutman sorunu kökten çözmez; asıl mesele aynı kapsamta iki global tanımın bulunmasıdır.
-
-Neden var oldu?
-
-tsc’nin target değeri ES5/ES3 ise, TS derleyicisi let’i geniş tarayıcı uyumluluğu için var’a çevirir.
-"target": "ES2015" (veya daha yeni) yaparsan let korunur.
-
-TS string değerini değiştirmez (Zehra → Adem gibi bir dönüşüm olmaz). Bu sadece örnek metin karışıklığıdır.
-
-Kalıcı çözümler (birini veya birkaçını uygulayabilirsin)
-1) Derlenmiş JS’i ayrı klasöre koy ve projeden hariç tut (önerilen)
-
-Klasör yapısı:
-src/main.ts  ->  dist/main.js
-
-tsconfig.json örneği:
-
+const sum = function(num1:number,num2:number):number
 {
-  "compilerOptions": {
-    "target": "ES2018",
-    "module": "ESNext",
-    "outDir": "dist",
-    "rootDir": "src",
-    "strict": true,
-    "allowJs": false,
-    "checkJs": false
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
+  return num1+num2;//Biz num1,num2 ye eger type vermese idik bile javascript burda + kullanildig icin concetanation yapacaktir kendisi...completely legal jscript operation..olurdu...
 }
 
-npx tsc
+//Union type
+let album2 : number | string;
+album2 = 15;
+album2 = "Hello";
+//album3 = true;//not boolean
 
+let postId:string | number;//api postId yi string veya number gonderebilirse ornegin.. 
+let isActive:number | boolean | string;//sometimes 0 -false, 1 true..could be.. 
 
-2) Dosyayı modül haline getir (global yerine module scope)
+let re:RegExp = /\w+/g;//regular expression..which type..typescript inferred RegExp type
+//typescript regexp icin spesifik bir type atar..
 
-Globalde değil de modül kapsamı içinde olursan çakışma riski düşer:
-
-En üste boş bir export ekle:
-
-export {};
-let username = 'Zehra';
-Bu dosyayı “module” yapar; username artık global değil, modül içinde kalır.
-
-Alternatif: type="module" ile ESM kullanıyor ve her dosyayı modül gibi kurguluyorsan da global kirliliği engellersin.
-
-*/
