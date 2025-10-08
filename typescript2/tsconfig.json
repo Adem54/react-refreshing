@@ -1,0 +1,48 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "compilerOptions": {
+    // File Layout
+     "rootDir": "./src",//we must point out to the typescript file location folder
+     "outDir": "./build/js",//We must point out to the jscript file location folder
+
+    // Environment Settings
+    // See also https://aka.ms/tsconfig/module
+    "module": "es2020",
+    "target": "es2016",//buryai kullanarak hangi ecmascript e gore compile edilecegini belirleiz ki burda tum browserlarda calisacak bir ecmscript versiyonu vermemiz onemlidir..es5 de kullanabilirz daha dah eski verisyonlar iciin kullanmak istersek..iste bu compile versyonun a gore let leri 2016 ile beraber let olarak ceviriyor..2016 dan once, kullarnisak o zaman var a cevirir
+    "types": [],
+    // For nodejs:
+    // "lib": ["esnext"],
+    // "types": ["node"],
+    // and npm install -D @types/node
+
+    // Other Outputs
+    // "sourceMap": true,
+    // "declaration": true,
+    // "declarationMap": true,
+
+    // Stricter Typechecking Options
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+     // "noEmitOnError": true,//typescript compile hatasi verirse, js te cevirme yapma hata ver demis oluruz..ama bun vermezsek veya false verirsek o zaman, sadece hata mesaji verir ama yine de compile eder
+
+    // Style Options
+    // "noImplicitReturns": true,
+    // "noImplicitOverride": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
+    // "noFallthroughCasesInSwitch": true,
+    // "noPropertyAccessFromIndexSignature": true,
+
+    // Recommended Options
+    "strict": true,
+    "jsx": "react-jsx",
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "noUncheckedSideEffectImports": true,
+    "moduleDetection": "force",
+    "skipLibCheck": true,
+  },
+  "include":[//burayi ekliyoruz cunku, diyrouz ki sen sadece bu klasore eeklene ts leri jscripte cevir diyoruz..dikkat edelim..yoksa biz nereye typescirpt dosyasi yazsak onu hemen js te cevirecek...ana root directory de 1 tane root.ts olustrudum bunu otomatik oalrak .js ye cevirmez artik..src klasoru disindaki typescript dosyalarini gormezden geleceek arti...compile etmeyecek
+    "src"
+  ]
+}
