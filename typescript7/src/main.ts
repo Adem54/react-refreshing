@@ -245,11 +245,13 @@ Dikkat: typeof Student5 yanlıştır (interface bir “değer” değildir; type
 //for (const key in student4) ve Object.keys(student4) çalışma zamanında string döndürür; TypeScript bunları geniş bir string olarak görür, "name" | "GPA" | "classes" diye daraltmaz.
 //Bu yüzden student4[key] ifadesi tür açısından güvensiz görünür. Güvenli hale getirmek için assertion yapıyoruz:
 
-for (const key in student4) {
+for (const key in student4) 
+{
   console.log(student4[key as keyof Student4]); // key'i daraltıyoruz
 }
 //Alternatif (daha “tipli”) bir yol:
-for (const key of Object.keys(student4) as Array<keyof Student4>) {
+for (const key of Object.keys(student4) as Array<keyof Student4>) 
+{
   console.log(student4[key]);
 }
 
