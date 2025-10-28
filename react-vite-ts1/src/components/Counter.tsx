@@ -1,7 +1,12 @@
-import { useState, type ReactEventHandler } from "react";
+import { useState, type ReactEventHandler, type ReactNode } from "react";
 
-const Counter = () => {
-	const [count,setCount] = useState<number>(1);
+type CounterProps = {
+	setCount:React.Dispatch<React.SetStateAction<number>>//Bunu nerden aliyoruz dikkat...App.tsx de Counter icine yazdigmz setCount propsun  uzerine gittigmzde typescript kendisi biz type ini gosteriyor
+	children:ReactNode, //DIKKAT CHILDREN I EXPLICITYL OLARAK DEFINE ETMNEMIZ GEREKIYOR ARTIK YENI REACT VERSIYONUNDA,ESKIDEN IMPLICITYL DEFINE VARDI BIZIM YAPMAMIZA GEREK YOKTU SIMDI ARTIK OYLE DEGIL(REACT 18 DEN SONRA)
+	count:number
+}
+const Counter = ({setCount,children, count}:CounterProps) => {
+	//const [count,setCount] = useState<number>(1);
 	//Bazen null da olabilmesini istyebiliriz...boyle durumlar icin union type kullaniriz:const [count,setCount] = useState<number | null>(null); Bu arada zaten biz direk olarak value ye 1 atayinca o inferred olacak yani zatenn type i nummber oldugunun cikariminda bulunacak typescript kendisi...
 
 const handleIncrease = (e:React.ChangeEvent<HTMLButtonElement>)=>
@@ -27,14 +32,14 @@ const handleDecrease = ()=>
 }
 
   return (
-	 <div>
-		    
+	 <div>  
 		<button name="test!!" onClick={(e)=>handleIncrease(e)}>Increase</button>
 		<button onClick={()=>setCount(count+1)}>Increase2</button>
 		<button onClick={handleDecrease}>Decrease</button>
 		<button onClick={()=>setCount(count-1)}>Decrease2</button>
 		<br />
-		<h2>{count}</h2>
+		<h2>{children}</h2>
+		<h1>{count}</h1>
 	 </div>
   )
 }
