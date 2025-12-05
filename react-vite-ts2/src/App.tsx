@@ -66,6 +66,39 @@ console.log(inputRef?.current?.value);//input elementinin valuesidir burasi
 //Simdi useRef attributunde ref={inputRef} bulunan input jsx elemenitnin referansini alir asagidaki bu compnent icinde bulunan input
 //Ayrica inputRef.current.value sini degisitirmek componenti rerender etmeyecektir, cunku bu input elementi ne ekleyecegimz onclick veya oninput 
 /*
+<input ref={inputRef} /> diyerek
+React’e: “Bu DOM elementini inputRef.current içine koy” diyorsun.
+Sonra:
+inputRef.current üzerinden doğrudan DOM API’sini kullanabiliyorsun:
+focus()
+scrollIntoView()
+value
+vs.
+useRef ne zaman kullanılır?
+✅ En tipik kullanım 1: DOM elemanına erişmek istediğinde
+Input’u otomatik focuslamak
+Bir div’e scroll yapmak
+Video’yu play/pause yapmak
+Canvas, map, third-party kütüphaneler vs.
+Örnek: modal açıldığında input’a focus ver…
+
+Kullanım 2: Render tetiklemeden değer saklamak istediğinde
+useRef sadece DOM için değil, herhangi bir mutable değeri saklamak için de kullanılır.
+Örneğin:
+setInterval id’sini saklamak
+Önceki state değerini saklamak
+Belli bir sayacı tutmak, ama UI’ı güncellemek istemiyorsan
+const renderCount = useRef(0);
+useEffect(() => {
+  renderCount.current += 1;
+  console.log("Render sayısı:", renderCount.current);
+});
+Burada:
+renderCount.current değişiyor ama
+Component yeniden render olmuyor (bu da önemli fark: useState değişince render olur, useRef değişince olmaz)
+
+*/
+/*
 Neden console.da input jsx elementi birden fazla kez gelior cunku:React 18’de StrictMode şunu yapar:
 Component’i bilerek iki kere render eder (sadece dev ortamda)
 İlk render → normal
@@ -84,6 +117,15 @@ useEffect mount/unmount simüle edilir
   )
 }
 export default App
+
+/*
+useRef vs useState farkı
+Özellik	useState	useRef
+Değişince render?
+	useState=>✅ Evet, component yeniden render olur	
+  useRef=> ❌ Hayır, render tetiklemez
+
+*/
 
 //onclick iceriisndeki ()=>setCount(prev=>prev+1) bu fonksion her seferinden yeniden uretiliyor
 //Bu fonksihyonu al isimlendir ve  usecallback icerisine sarilirsa then it will be memoized and that can be handy
