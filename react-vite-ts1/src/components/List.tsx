@@ -1,4 +1,5 @@
 import { type ReactNode } from 'react';
+//typescript de type ile kullanirzi ama javscriptte direk ReactNode diye kullaniriz... 
 //ReactNode u biz ne icin kullaniyorduk, children in type ni vermek icin hatirlayalim
 //    "verbatimModuleSyntax": true, oldugundan dolayi sadece type olarak kabul ediyor typesciptten gelen seyleri cunku runtimeda kullanilmiyor bu bir typescript ayaridir false yaparsak hata vermeden basina type yazmasak da ReactNode yi kabul edecektir
 //Birde biz artik React tanimlamasi yerine ReactNode kullaniyoruz react18 den sonra unutmaylim
