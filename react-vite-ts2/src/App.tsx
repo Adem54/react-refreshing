@@ -1,5 +1,5 @@
 
-import { useState, useEffect, useCallback, type MouseEvent, type KeyboardEvent, useMemo } from 'react';
+import { useState, useEffect, useCallback, type MouseEvent, type KeyboardEvent, useMemo, useRef } from 'react';
 import './App.css'
 
 //React hooks
@@ -40,7 +40,7 @@ const fib:fibFunc = (n)=>{
   return fib(n-1) + fib(n-2)
 }//This is expensive calc
 
-const myNum:number = 37;
+const myNum:number = 38;
 
 const result = useMemo<number>(()=>fib(myNum),[myNum]);
 //This is depend on myNum ,so it means,when myNum change useMemo is being triggered..and recalculate the result
@@ -58,10 +58,28 @@ Hook’lar sadece React function component’lerin veya custom hook’ların en 
 Normal fonksiyonların içinde (ör: fib, helper function, if, for, map içinde) useState, useEffect, useMemo, useCallback KULLANAMAZSIN.
 */
 
+const inputRef = useRef<HTMLInputElement>(null);//nonnull guard da yapabiliriz..null! gibi
+//if(!inputRef.current) ile kullanaiblirz
+//Veya optionalChain ile de yapbiriz
+console.log(inputRef?.current);//Burda inputRef objesi null olabilme durumundan dolayi typescrpt sikayet eder bu sikayeti optionalchain ile halledebilriz
+console.log(inputRef?.current?.value);//input elementinin valuesidir burasi
+//Simdi useRef attributunde ref={inputRef} bulunan input jsx elemenitnin referansini alir asagidaki bu compnent icinde bulunan input
+//Ayrica inputRef.current.value sini degisitirmek componenti rerender etmeyecektir, cunku bu input elementi ne ekleyecegimz onclick veya oninput 
+/*
+Neden console.da input jsx elementi birden fazla kez gelior cunku:React 18’de StrictMode şunu yapar:
+Component’i bilerek iki kere render eder (sadece dev ortamda)
+İlk render → normal
+İkinci render → side-effect var mı test amaçlı
+Böylece:
+console.log’lar 2 kere görünür
+useEffect mount/unmount simüle edilir
+*/
   return (
     <div className="App">
-      <h1>React</h1>
+      <h1>{count}</h1>
+      <h2>{result}</h2>
       <button onClick={addTwo}>Add</button>
+      <input ref={inputRef}/>
     </div>
   )
 }
